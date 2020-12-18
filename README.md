@@ -6,5 +6,3 @@ pytest
 
 It is written in Python3.
 Testing franework is done with pytest
-
-Took
