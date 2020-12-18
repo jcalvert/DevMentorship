@@ -29,6 +29,14 @@ def test_return_coins(createVM):
 	createVM.return_coins()
 	assert createVM.coins == 0
 
+def test_return_correct_number_of_coins(createVM):
+    createVM.coins =3
+    assert createVM.return_coins() == 3
+# when I have 3 coins in the machine and vend a cola, I should get back 1 coin.
+# vending = new vending machine
+# 3x vending insertcoin
+# vending vend "cola"
+# assert 1 coin
 
 def test_vend(createVM):
 	createVM.coins = 4
