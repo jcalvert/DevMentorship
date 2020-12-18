@@ -1,3 +1,4 @@
+import json
 import pytest
 
 from vendingSimple import VendingMachine
@@ -49,3 +50,26 @@ def test_vend(createVM):
 	createVM.vend('item2')
 	assert createVM.coins == 0
 	assert createVM.inventory == {'item1': 0, 'item2': 3, 'item3': 5}
+#### added by jc
+def test_negative_inventory(createVM):
+    createVM.inventory = {'coke': 0, 'sprite': 1, 'lacroix': 3}
+    createVM.insert_coin()
+    createVM.insert_coin()
+    createVM.vend('coke')
+    assert createVM.inventory == {'coke': 0, 'sprite': 1, 'lacroix': 3}
+
+def test_coin_return(createVM):
+    createVM.insert_coin()
+    assert createVM.return_coins() == 1
+
+def test_return_coins_on_vend(createVM):
+    createVM.insert_coin()
+    createVM.insert_coin()
+    createVM.insert_coin()
+    assert json.load(createVM.vend("item1")) == {"vended": "item1", "returned_coins": 1}
+
+def test_invalid_beverage(createVM):
+    createVM.insert_coin()
+    createVM.insert_coin()
+    assert json.load(createVM.vend("cola")) == {'error': 'Invalid item!'}
+
